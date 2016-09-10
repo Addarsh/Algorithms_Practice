@@ -31,7 +31,7 @@ public class MergeSort{
 	public static void merge(int[] arr,int start,int mid,int end){
 		//Copy elements into merge
     int[] mergearr = new int[end-start+1];
-		for(int i =start; i <=end;i++) mergearr[i] = arr[i];		
+		for(int i =0; i < arr.length;i++) mergearr[i] = arr[i];		
 		int i = start; int j = mid+1; int k = start;
 		while(i <= mid && j <= end){
 			if(mergearr[i] <= mergearr[j]){
