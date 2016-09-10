@@ -1,0 +1,5 @@
+Iterables are data structures in java that are iterable without exposing the internal implementation. For example, a stack or a queue
+is iterable data structure and provides for an iterator method inside that allows us to perform foreach operations and traverese over
+all component elements. To implement an iterator, class must first be Iterable. To do this, add an "implements Iterable<Item>" along with 
+the class definition. Inside the class, define a class of type iterator that returns a private class iterator object that you define. The 
+class you define will implemnt 3 methods i.e. hasnext(), next() and remove() (We will not use remove() as prescribed in the course). 

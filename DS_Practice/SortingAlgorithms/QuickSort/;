@@ -1,0 +1,28 @@
+/*
+First implementation
+of quicksort. let's see how it goes.
+Array must be randomly shuffled first.
+*/
+
+import edu.princeton.
+public class QuickSort{
+
+	//Fisher Yates shuffle
+	public static<T extends Comparable<T>> void Shuffle(T arr, int start, int end)
+					
+	}
+
+	private void partition(){
+
+
+	}
+
+	public void sort(int arr, int start, int end){
+		if(start == end) return;
+		//Traverse array from left and right until parition
+		int pivotpos = partition(arr,start,end);
+		sort(arr,start,pivotpos-1);
+		sort(arr,pivotpos+1,end);
+	}
+
+}

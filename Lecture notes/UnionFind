@@ -1,0 +1,10 @@
+Union Find is an interesting problem where we need to figure out given a set of nodes and some connected sets, whether two nodes are connected to each other or  not.
+
+Two major algorithms to achieve this are:
+1. Quick Find - The nodes are placed in an array such that the index of the array holds the value of the node. As unions occur, connected groups are formed with the same array values. When taking a union of two numbers, the array value of one of the nodes and its connected members is copied with the value of the other node. Union operation takes N time to happen. The Find operation only takes constant time to return. Complexity = M*N
+
+2. Quick Union - We segregate the array as smaller subgroup of trees. Each subtree is a connected group. Each node in each tree has a parent node associated with it. Nodes with no parent nodes are called roots. The find operation because we need to find the root of each element to be compared and then check if they are equal. The union operation is also expensive because we need to figure of the roots of both elements and then join them togther. Complexity = M*N
+
+3. Weighted Quick Union - When making union between connected trees, we always make sure that the small connected group joins the larger connected group. In this way, we make sure the tree heights are smaller, making them more flat and thus give us a faster access when using find or union. Herem it can be shown that the depth of any tree can is log N, making the union and find operations logarithmic in nature as oppsed to linear in time. The reduction in time is achieved by the adding an extra member variable in the class adding to spatial complexity.
+
+4. Weighted Quick Union with Path Compression - While finding the root of a particular node, flatten the tree further by making all the nodes leading to the root to directly point to the root instead. Greatly simplifies the tree and flattens it further. This algorithm gives a time complexity of N + M*log*N. (iterative logarithms)
