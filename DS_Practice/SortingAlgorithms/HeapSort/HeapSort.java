@@ -47,6 +47,7 @@ public class HeapSort{
 		buildHeap(arr);
 		mysort(arr);
 	}
+	
 	public static void main(String[] args){
 		Integer[] arr = {-2,-4,2,6,77,-42,10};
 		HeapSort.sort(arr);
