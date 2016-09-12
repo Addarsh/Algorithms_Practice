@@ -1,7 +1,7 @@
 /*Implementation of a Binary Search tree 
 BST is the data structure used to implement a symbol table
 BST is a Binary tree in order i.e left subtree is smaller than node is smaller than right subtree
-We will use Linked Lists to implement a BST 
+We will use Linked Lists to implement a Binary Search Tree 
 */
 
 public class BSTree<Key extends Comparable<Key>,Value>{
