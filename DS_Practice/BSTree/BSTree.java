@@ -45,7 +45,7 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 			 mynode.count = 1;
 			 return mynode;
 		}
-		if(node.getKey().compareTo(key) >0){
+		if(node.getKey().compareTo(key) > 0){
 			node.left = add(node.left,key,value);
 		}else if(node.getKey().compareTo(key) < 0){
 			node.right = add(node.right,key,value);
@@ -76,6 +76,46 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		}
 		return 0;
 	}
+
+	public void delete(Key key){
+		if(!contains(key)) return;
+		root = delete(root,key);
+	}
+
+	public Node delete(Node node, Key key){
+		//Use Hibbard deletion to delete key	
+		if(node.getKey().compareTo(key) == 0){
+			
+			//Find how many children the key has
+			if(node.left != null && node.right != null){
+				//Two children, things just became mroe tricky
+				//Find minimum of right subtree
+				Node mynode =  node.right;
+				Node minNode = min(mynode);
+				
+				//Copy node values
+				node.key = minNode.key;
+				node.value = minNode.value;
+				
+				//delete the old node
+				node.right = deleteMin(mynode);  			
+			} else if(node.left != null){
+				return node.left;
+			} else if(node.right != null){
+				return node.right;
+			}else{
+				return null; //Deleting currrent node
+			}
+		}else if(node.getKey().compareTo(key) > 0){
+			node.left = delete(node.left,key);			
+		}else{
+			node.right = delete(node.right,key);			
+		}
+		//Adjust node size
+		node.count =  1 + size(node.left) + size(node.right);
+		return node;		
+	}
+
 
 	//Private helper of public method
 	public int size(Node node){
@@ -126,6 +166,14 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		}
 	}
 
+	private Node min(Node node){
+		if(node == null) return null;
+		while(node.left != null){
+			node = node.left;
+		}	
+		return node;
+	}
+
 	//Find smallest key in tree
 	public Key min(){
 		if(root == null) return null;
@@ -164,8 +212,7 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 	public Node deleteMin(Node node){
 		if(node.left == null){
 			return node.right;
-		}	
-		else {
+		}	else {
 			node.left =  deleteMin(node.left);
 			node.count = 1 + size(node.left) + size(node.right);
 			return node;
@@ -184,6 +231,7 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		System.out.printf("%d\n",mytree.floor(17));
 		System.out.printf("%d\n",mytree.rank(13));*/
 	
-		System.out.printf("%d\n",mytree.size(5));
+		mytree.delete(5);
+		System.out.printf("%d\n",mytree.size(10));
 	}
 }
