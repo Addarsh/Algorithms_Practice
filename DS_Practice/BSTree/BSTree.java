@@ -16,7 +16,7 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 			this.value = value;
 			left = null;
 			right = null;
-			count = 1;
+			count = 0;
 		}
 		public Key getKey(){
 			return key;
@@ -41,7 +41,10 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 	//Insert a new key in the tree, private helper
 	public Node add(Node node,Key key,Value value){
 		Node mynode = new Node(key,value);
-		if(node == null) return mynode;
+		if(node == null){
+			 mynode.count = 1;
+			 return mynode;
+		}
 		if(node.getKey().compareTo(key) >0){
 			node.left = add(node.left,key,value);
 		}else if(node.getKey().compareTo(key) < 0){
@@ -49,7 +52,7 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		}else{
 			node = mynode; 
 		}
-		node.count += size(node.left) + size(node.right);
+		node.count = 1 + size(node.left) + size(node.right);
 		return node;
 	}
 
@@ -61,11 +64,17 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 
 	//Find size of subtree of given key,public method
 	public int size(Key key){
-		Node node = null;
-		if(contains(key)) {
-			node = new Node(key,get(key));
+		Node curr = root;
+		while(curr != null){
+			if(key.compareTo(curr.getKey()) > 0){
+				curr = curr.right;		
+			} else if(key.compareTo(curr.getKey()) < 0){
+				curr = curr.left;
+			} else{
+				return size(curr);
+			}
 		}
-		return size(node);
+		return 0;
 	}
 
 	//Private helper of public method
@@ -148,6 +157,21 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		return floored;
 	}
 
+	public void deleteMin(){
+		root = deleteMin(root);
+	}
+
+	public Node deleteMin(Node node){
+		if(node.left == null){
+			return node.right;
+		}	
+		else {
+			node.left =  deleteMin(node.left);
+			node.count = 1 + size(node.left) + size(node.right);
+			return node;
+		}
+	}
+
   public static void main(String[] args){
 		BSTree<Integer,String> mytree= new BSTree<Integer,String>();
 		mytree.add(5,"Hey");
@@ -157,9 +181,9 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		/*System.out.printf("%s\n",mytree.get(10));
 		System.out.printf("%d\n",mytree.min());
 		System.out.printf("%d\n",mytree.max());
-		System.out.printf("%d\n",mytree.floor(17));*/
-
-		System.out.printf("%d\n",mytree.rank(13));
+		System.out.printf("%d\n",mytree.floor(17));
+		System.out.printf("%d\n",mytree.rank(13));*/
+	
+		System.out.printf("%d\n",mytree.size(5));
 	}
-
 }
