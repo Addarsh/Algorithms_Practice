@@ -126,7 +126,7 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		}
 	}
 
-	//Find smallest key in the tree
+	//Find smallest key in tree
 	public Key min(){
 		if(root == null) return null;
 		Node curr = root;
