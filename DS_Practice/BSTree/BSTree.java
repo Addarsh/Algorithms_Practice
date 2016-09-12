@@ -10,11 +10,13 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		Value value;
 		Key key;
 		Node left, right;
+		int count;
 		public Node(Key key, Value value){
 			this.key = key;
 			this.value = value;
 			left = null;
 			right = null;
+			count = 1;
 		}
 		public Key getKey(){
 			return key;
@@ -31,10 +33,12 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		root = null;			
 	}
 
+	//Insert new key, public method
 	public void add(Key key, Value value){
 		root = add(root,key,value);
 	}	
 
+	//Insert a new key in the tree, private helper
 	public Node add(Node node,Key key,Value value){
 		Node mynode = new Node(key,value);
 		if(node == null) return mynode;
@@ -45,9 +49,32 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		}else{
 			node = mynode; 
 		}
+		node.count += size(node.left) + size(node.right);
 		return node;
 	}
 
+	//Check if given key is containeid
+	//in the tree
+	public boolean contains(Key key){
+		return get(key) != null;
+	}
+
+	//Find size of subtree of given key,public method
+	public int size(Key key){
+		Node node = null;
+		if(contains(key)) {
+			node = new Node(key,get(key));
+		}
+		return size(node);
+	}
+
+	//Private helper of public method
+	public int size(Node node){
+		if(node == null) return 0;
+		else return node.count;
+	}
+
+	//Get value associated with given key
 	public Value get(Key key){
 		Node curr = root;
 		while(curr != null){
@@ -63,12 +90,76 @@ public class BSTree<Key extends Comparable<Key>,Value>{
 		return null;
 	}
 
+	//Find maximum of all keys
+	public Key max(){
+		if(root == null) return null;
+		Node curr = root;
+		while(curr.right != null){
+			curr = curr.right;
+		}
+		return curr.getKey();
+	}
+
+	//Find number of elements smaller
+	//than the given key
+	public int rank(Key key){
+		int totalSize = rank(root,key);			
+		return totalSize;
+	}
+
+	public int rank(Node node, Key key){
+		if(node == null) return 0;
+		if(key.compareTo(node.getKey()) >= 0){
+			int totalSize = 1 + size(node.left);
+			return totalSize + rank(node.right,key);
+		} else{
+			return rank(node.left,key);	
+		}
+	}
+
+	//Find smallest key in the tree
+	public Key min(){
+		if(root == null) return null;
+		Node curr = root;
+		while(curr.left != null){
+			curr = curr.left;
+		}
+		return curr.getKey();
+	}
+
+	public Key floor(Key k){
+		if(root == null) return null;
+		Node curr = root;
+		
+		Key floored= null;
+		while(curr != null){
+			Key mykey = curr.getKey();
+			if(mykey.compareTo(k) > 0){
+				curr = curr.left;
+			}else if (mykey.compareTo(k) < 0){
+				if(floored == null) floored = mykey;
+				else if(mykey.compareTo(floored) > 0) floored = mykey;
+				curr = curr.right;
+			} else{
+				floored = mykey;
+				break;
+			}
+		}
+		return floored;
+	}
+
   public static void main(String[] args){
 		BSTree<Integer,String> mytree= new BSTree<Integer,String>();
 		mytree.add(5,"Hey");
 		mytree.add(10,"Boy");
 		mytree.add(15,"dei");
 		mytree.add(2,"doi");
-		System.out.printf("%s\n",mytree.get(2));
+		/*System.out.printf("%s\n",mytree.get(10));
+		System.out.printf("%d\n",mytree.min());
+		System.out.printf("%d\n",mytree.max());
+		System.out.printf("%d\n",mytree.floor(17));*/
+
+		System.out.printf("%d\n",mytree.rank(13));
 	}
+
 }
