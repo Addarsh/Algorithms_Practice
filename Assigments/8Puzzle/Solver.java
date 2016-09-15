@@ -9,7 +9,6 @@ public class Solver{
 	//Private variables
 	MinPQ<searchNode> myq;
 	int minMoves;	
-	boolean solvable;
 	ArrayList<Board> mysolution;
 
 	private class searchNode{
@@ -113,30 +112,22 @@ public class Solver{
 
 	//Solve initial board using A*
 	public Solver(Board initial){
-		if(initial.isSolvable()){
-			solvable = true;	
-			searchNode initNode = new searchNode(initial);
-			myq = new MinPQ(10,new myComparator());
-			myq.insert(initNode);
+		searchNode initNode = new searchNode(initial);
+		myq = new MinPQ(10,new myComparator());
+		myq.insert(initNode);
 
-			mysolution = new ArrayList<Board>();
-		
-			//Use A* to solve
-			aStar();
-
-		} else{
-			solvable = false;
-		}
+		mysolution = new ArrayList<Board>();
+	
+		//Use A* to solve
+		aStar();
 	}
 
 	//Returns min number of moves to solve board
 	public int moves(){
-		if(solvable) return minMoves;
-		return -1;
+		return minMoves;
 	}
 
 	public Iterable<Board> solution(){
-		if(!solvable) return null;
 		return new SolutionSet();
 	}
 	
@@ -153,12 +144,16 @@ public class Solver{
 				}
 			}
 			Board myboard = new Board(blocks);
-			Solver mysolver = new Solver(myboard);
-			//Print solution
-			Iterable<Board> solution = mysolver.solution();
-			System.out.println("Min moves: "+mysolver.moves());
-			for(Board board:solution){
-				System.out.println(board.toString());
+			if(myboard.isSolvable()){
+				Solver mysolver = new Solver(myboard);
+				//Print solution
+				Iterable<Board> solution = mysolver.solution();
+				System.out.println("Min moves: "+mysolver.moves());
+				for(Board board:solution){
+					System.out.println(board.toString());
+				}
+			}else{
+				System.out.println("Unsolvable puzzle");
 			}
 		}catch(IOException e){
 			System.out.println("Caught exception: "+e.getMessage());
