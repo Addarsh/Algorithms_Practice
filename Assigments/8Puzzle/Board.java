@@ -33,9 +33,9 @@ public class Board{
 	public int hamming(){
 		int distance = 0;
 		for(int i =0; i < n;i++){
-			int num =  3*i+1;
+			int num =  n*i+1;
 			for(int j =0; j < n;j++){
-				if(myboard[i][j] != num+i+j){
+				if(myboard[i][j] != num+j){
 				 distance += 1;	
 				}
 			}
@@ -48,14 +48,14 @@ public class Board{
 		for(int i =0; i < n; i++){
 			for(int j = 0; j < n; j++){
 				if(myboard[i][j] == 0) continue;
-				if(myboard[i][j] != 4*i+j+1){
+				if(myboard[i][j] != (n+1)*i+j+1){
 					int row, col;
-					if(myboard[i][j] %3 ==0){
+					if(myboard[i][j] %n ==0){
 						col =2;
-						row = myboard[i][j]/3-1;
+						row = myboard[i][j]/n-1;
 					}else{
-						col = myboard[i][j] % 3-1;
-						row = myboard[i][j] /3;
+						col = myboard[i][j] %n -1;
+						row = myboard[i][j] /n;
 					}
 
 				} 
@@ -69,6 +69,7 @@ public class Board{
 	}
 
 	public boolean equals(Object y){
+		if(y == null) return false;
 		Board other = (Board) y;
 		if(this.toString() != other.toString()) return false;
 		return true;
@@ -105,12 +106,10 @@ public class Board{
 		
 		if(n % 2 != 0){
 			//Odd size
-			System.out.printf("%d %d\n",arr[0],arr[1]);
 			if(arr[1] % 2 != 0) return false;
 			return true;	
 		} else{
 			//Even size
-			System.out.printf("%d %d\n",arr[0],arr[1]);
 			if((arr[0] + arr[1]) % 2 == 0) return false;
 			return true;
 		}
@@ -243,8 +242,8 @@ public class Board{
 			//Shuffle array
 			shuffle(myarr);
 		}else{
-			myarr = new int[]{0,2,3,4,5,6,1,8,9,10,7,11,13,14,15,12};	
-			//myarr = new int[]{1,2,3,4,7,5,8,0,6};	
+			//myarr = new int[]{0,2,3,4,5,6,1,8,9,10,7,11,13,14,15,12};	
+			myarr = new int[]{1,2,3,4,5,6,7,8,0};	
 		}
 		int totalindex = 0;
 		for(int i =0; i < blocks.length;i++){	
@@ -256,12 +255,13 @@ public class Board{
 	}
 
 	public static void main(String args[]){
-		int size = 4;
+		int size = 3;
 		int[][] blocks = new int[size][size];
 		create2Dmatrix(blocks);
 		Board myboard = new Board(blocks);		
 		System.out.printf("%s",myboard.toString());
 		//System.out.println(myboard.isSolvable());	
+		System.out.println(myboard.isGoal());
 		System.out.println("Printing neighbors");
 	
 		Iterable<Board> myneiburs = myboard.neighbors();
