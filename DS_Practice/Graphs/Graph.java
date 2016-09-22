@@ -16,6 +16,7 @@ public class Graph{
 	}
 
 	public void addEdge(int v, int w){
+		if( v >= numVertices || w >= numVertices || v < 0 || w < 0) return;
 		adlist[v].add(w);
 		adlist[w].add(v);
 	}
