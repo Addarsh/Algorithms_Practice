@@ -15,8 +15,18 @@ public class Graph{
 		}
 	}
 
+	//Check for duplicates to remove redundancy
+	boolean checkForDuplicates(int s, int v){
+		for(int a : adlist[s]){
+			if(a == v) return true;
+		}
+		return false;
+	}
+
+	//Add an edge to the graph
 	public void addEdge(int v, int w){
 		if( v >= numVertices || w >= numVertices || v < 0 || w < 0) return;
+		if(checkForDuplicates(v,w) || checkForDuplicates(w,v)) return; 
 		adlist[v].add(w);
 		adlist[w].add(v);
 	}
@@ -54,6 +64,7 @@ public class Graph{
 		g.addEdge(0,4);
 		g.addEdge(1,3);
 		g.addEdge(1,2);
+		g.addEdge(3,1);
 		System.out.printf(g.toString());
 	}
 }
