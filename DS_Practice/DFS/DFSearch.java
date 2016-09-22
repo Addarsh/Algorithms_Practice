@@ -10,6 +10,7 @@ public class DFSearch{
 
 	boolean[] marked;
 	int[] edgeTo;
+	int source;
 
 	public DFSearch(Graph G, int s){
 		marked = new boolean[G.V()];	
@@ -18,6 +19,7 @@ public class DFSearch{
 		}
 		edgeTo = new int[G.V()];	
 		edgeTo[s] = s; //Source assigned to source
+		source = s;
 		dfs(G,s);  //Process the graph
 	}
 
@@ -32,11 +34,23 @@ public class DFSearch{
 		}			
 	}
 
+	//Print out the edgeTo array
 	public void printEdgeTo(){
 		for(int i =0; i < edgeTo.length; i++){
 			System.out.printf("%d ",edgeTo[i]);
 		}
 		System.out.println();
+	}
+
+	//Print path from current node to source
+	void printPath(int v){
+		int parent;
+		do{
+			System.out.printf("%d ---> ",v);
+			parent = edgeTo[v];
+			v = parent;
+		}while(parent != source);
+		System.out.printf("%d\n",source);
 	}
 
 	public static void main(String[] args){
@@ -47,6 +61,7 @@ public class DFSearch{
 		G.addEdge(5,2);
 		G.addEdge(3,4);
 		DFSearch dfs = new DFSearch(G,1);
-		dfs.printEdgeTo();		
+		//dfs.printEdgeTo();
+		dfs.printPath(0);	
 	}
 }
