@@ -1,5 +1,7 @@
 //Implementation of the Graph API
 //using adjacency list representation
+package Graphs;
+
 import edu.princeton.cs.algs4.Bag;
 
 public class Graph{
@@ -16,7 +18,7 @@ public class Graph{
 	}
 
 	//Check for duplicates to remove redundancy
-	boolean checkForDuplicates(int s, int v){
+	private boolean checkForDuplicates(int s, int v){
 		for(int a : adlist[s]){
 			if(a == v) return true;
 		}
@@ -31,15 +33,15 @@ public class Graph{
 		adlist[w].add(v);
 	}
 
-	Iterable<Integer> adj(int v){
+	public Iterable<Integer> adj(int v){
 		return adlist[v];
 	}	
 
-	int V(){
+	public int V(){
 		return numVertices;
 	}
 	
-	int E(){
+	public int E(){
 		int numEdges = 0;
 		for(int i =0; i < numVertices; i++){
 			numEdges += adlist[i].size();
