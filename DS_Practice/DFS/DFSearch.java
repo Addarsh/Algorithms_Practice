@@ -62,6 +62,6 @@ public class DFSearch{
 		G.addEdge(3,4);
 		DFSearch dfs = new DFSearch(G,1);
 		//dfs.printEdgeTo();
-		dfs.printPath(0);	
+		dfs.printPath(4);	
 	}
 }
