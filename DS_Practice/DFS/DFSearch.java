@@ -17,6 +17,7 @@ public class DFSearch{
 			marked[i] = false;
 		}
 		edgeTo = new int[G.V()];	
+		edgeTo[s] = s; //Source assigned to source
 		dfs(G,s);  //Process the graph
 	}
 
@@ -45,7 +46,7 @@ public class DFSearch{
 		G.addEdge(1,5);
 		G.addEdge(5,2);
 		G.addEdge(3,4);
-		DFSearch dfs = new DFSearch(G,0);
+		DFSearch dfs = new DFSearch(G,1);
 		dfs.printEdgeTo();		
 	}
 }
